@@ -1,0 +1,29 @@
+{
+  "name": "infinite-forest",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "tsx tests/performance.test.ts && tsx tests/ui.test.ts && tsx tests/startup.test.ts && tsx tests/world.test.ts && tsx tests/shaders.ts && npm run test:train",
+    "test:browser": "node tests/smoke.mjs",
+    "format": "prettier --write src index.html tests README.md",
+    "test:train": "tsx tests/train.test.ts && tsx tests/train-manager.test.ts",
+    "test:train:browser": "node tests/train.browser.mjs"
+  },
+  "dependencies": {
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "@napi-rs/canvas": "^1.1.0",
+    "@playwright/test": "^1.56.1",
+    "@types/three": "^0.180.0",
+    "happy-dom": "^21.0.4",
+    "prettier": "^3.9.10",
+    "tsx": "^4.20.6",
+    "typescript": "~5.9.3",
+    "vite": "^7.1.12"
+  }
+}

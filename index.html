@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#13261d" />
+    <meta
+      name="description"
+      content="A living, endless forest. Walk slowly. Get beautifully lost."
+    />
+    <title>INFINITE FOREST — 无尽之森</title>
+  </head>
+  <body>
+    <div id="world"></div>
+    <div id="vignette"></div>
+    <header>
+      <a class="wordmark" href="/" aria-label="Infinite Forest home"
+        ><svg viewBox="0 0 32 32">
+          <path d="M16 2 6 17h6L4 28h24l-8-11h6Z" />
+          <path d="M16 18v13" /></svg
+        ><span
+          >INFINITE FOREST<small>AN EXPERIMENT IN WANDERING</small></span
+        ></a
+      >
+      <div class="top-actions">
+        <span class="live-dot"></span><span id="status">森林正在苏醒</span
+        ><button
+          id="sound"
+          aria-label="关闭环境音"
+          aria-pressed="true"
+          title="环境音"
+        >
+          ♫ <span>声音开启</span></button
+        ><button
+          id="settings-toggle"
+          aria-label="环境设置"
+          aria-expanded="false"
+        >
+          ☷
+        </button>
+      </div>
+    </header>
+    <main id="intro">
+      <div class="eyebrow"><span></span> A WORLD WITHOUT AN EDGE</div>
+      <h1>Into the<br /><em>evergreen.</em></h1>
+      <p class="intro-cn">无尽之森</p>
+      <p class="description">
+        让脚步慢下来，让世界远一点。<br />走进一片不断生长的森林，去往没有尽头的清晨。
+      </p>
+      <button id="enter" class="forest-entry" disabled>
+        <span id="enter-text">正在唤醒森林</span><span class="arrow">↗</span>
+      </button>
+      <button
+        id="auto-enter"
+        class="forest-entry"
+        title="无需操作，随森林前行"
+        disabled
+      >
+        <span>自动漫游</span><span class="arrow" aria-hidden="true">↗</span>
+      </button>
+      <button
+        id="train-enter"
+        class="forest-entry"
+        disabled
+        title="驾驶蒸汽列车，穿越无限森林"
+      >
+        <span>森林列车</span><span class="arrow" aria-hidden="true">↗</span>
+      </button>
+      <div class="entry-note">
+        实时生成的世界 <i>·</i> 每一次远行，都是新的风景
+      </div>
+    </main>
+    <aside id="settings" hidden>
+      <div class="panel-title">
+        森林的节奏 <button id="settings-close" aria-label="关闭设置">×</button>
+      </div>
+      <label
+        >时刻 <span id="time-name">清晨</span
+        ><input
+          id="time"
+          type="range"
+          min="0"
+          max="1"
+          step="0.001"
+          value="0.28"
+      /></label>
+      <div class="presets">
+        <button data-time="0.28" class="active">清晨</button
+        ><button data-time="0.49">日间</button
+        ><button data-time="0.73">黄昏</button
+        ><button data-time="0.95">夜晚</button>
+      </div>
+      <label
+        >风的强度 <span id="wind-value">柔风</span
+        ><input
+          id="wind"
+          type="range"
+          min="0"
+          max="2"
+          step="0.01"
+          value="0.7" /></label
+      ><label class="switch-line"
+        >时间自然流逝<input id="cycle" type="checkbox" checked /></label
+      ><label
+        >画面质量<select id="quality">
+          <option value="auto">自动适配</option>
+          <option value="high">高 · 更远的森林</option>
+          <option value="low">流畅 · 轻装漫游</option>
+        </select></label
+      >
+      <p>世界种子 271828 · 无边界程序生成</p>
+    </aside>
+    <div id="tour-controls" hidden>
+      <span>自动漫游中</span
+      ><select id="tour-speed" aria-label="自动漫游速度">
+        <option value="1.4">慢行</option>
+        <option value="2.2" selected>悠游</option>
+        <option value="3.3">快步</option></select
+      ><button id="tour-pause">暂停</button
+      ><button id="tour-manual">手动探索 ↗</button>
+    </div>
+    <section id="train-panel" hidden aria-label="火车驾驶控制面板">
+      <button
+        class="train-handle"
+        data-train="toggle"
+        aria-expanded="false"
+        aria-controls="train-content"
+      >
+        列车控制 <span aria-hidden="true">‹</span>
+      </button>
+      <div id="train-content" inert>
+        <div class="train-panel-heading">
+          <div>
+            <span class="train-kicker">THE EVERGREEN EXPRESS</span
+            ><strong>森林列车 <small>NO. 028</small></strong>
+          </div>
+          <span data-train="state" role="status">静止</span>
+        </div>
+        <div class="train-dashboard">
+          <div class="train-speed">
+            <span data-train="speed">0.0</span><small>KM/H</small>
+          </div>
+          <div class="train-readouts">
+            <span data-train="camera-name">车窗观光</span
+            ><span data-train="throttle">牵引 0%</span>
+          </div>
+        </div>
+        <div class="train-buttons">
+          <button data-train="accelerate">加速 W</button
+          ><button data-train="brake">制动 SPACE</button
+          ><button data-train="horn">鸣笛 H</button
+          ><button data-train="camera">切换视角 V</button
+          ><button data-train="restart">启动 R</button
+          ><button data-train="exit">下车 E</button>
+        </div>
+        <p>W / S 调节牵引 · SPACE 紧急制动 · E 停车下车</p>
+      </div>
+    </section>
+    <div id="reticle" hidden>·</div>
+    <div id="paused" hidden>
+      <span>TAKE A BREATH</span>
+      <h2>森林一直都在。</h2>
+      <button id="resume">继续漫游 ↗</button><button id="home">返回首页</button>
+    </div>
+    <div id="touch" hidden>
+      <button id="touch-forward" aria-label="向前移动">↑</button
+      ><button id="touch-jump" aria-label="跳跃">↟</button>
+    </div>
+    <footer>
+      <div class="location">
+        <span class="footer-line"></span>
+        <div>
+          <span class="footer-label">THE LIVING WILDERNESS</span
+          ><span id="coordinates">北纬般的宁静，任何方向</span>
+        </div>
+      </div>
+      <div class="controls">
+        <span
+          ><kbd>W</kbd
+          ><span class="keys"><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span></span
+        ><span>漫游</span><span class="divider"></span><span>鼠标 · 环顾</span
+        ><span class="divider"></span><span>SHIFT · 加速</span
+        ><span class="divider"></span><span>SPACE · 跳跃</span
+        ><span class="divider"></span><span>ESC · 释放</span>
+      </div>
+      <div class="metrics">
+        <span id="fps">— FPS</span><span id="backend">REALTIME 3D</span>
+      </div>
+    </footer>
+    <div id="error" hidden></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
